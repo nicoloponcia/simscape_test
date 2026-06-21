@@ -1,0 +1,22 @@
+component custom_ground
+  % Custom Electrical Reference
+  % Establishes a zero-voltage ground reference point for the circuit solver.
+  
+  nodes
+    gnd = foundation.electrical.electrical; % gnd:top
+  end
+  
+  variables
+    i = { 0, 'A' }; % Current entering the node
+  end
+  
+  branches
+    % Directs the Through variable to the universal implicit reference
+    i : gnd.i -> *; 
+  end
+  
+  equations
+    % The voltage at the ground node is forced to strictly zero
+    gnd.v == 0;
+  end
+end

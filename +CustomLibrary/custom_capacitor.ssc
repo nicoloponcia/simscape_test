@@ -1,0 +1,30 @@
+component custom_capacitor
+  % Custom Capacitor
+  % Models an electrical capacitor using a time derivative.
+  
+  nodes
+    p = foundation.electrical.electrical; % +:left
+    n = foundation.electrical.electrical; % -:right
+  end
+  
+  parameters
+    C = { 1, 'uF' }; % Capacitance
+  end
+  
+  variables
+    v = { 0, 'V' }; % Voltage
+    i = { 0, 'A' }; % Current
+  end
+  
+  branches
+    i : p.i -> n.i;
+  end
+  
+  equations
+    % Define the voltage across the nodes
+    v == p.v - n.v;
+    
+    % Charge accumulation equation using time derivative
+    i == C * v.der;
+  end
+end

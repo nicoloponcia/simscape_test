@@ -1,0 +1,32 @@
+component custom_ac_source
+  % Custom AC Voltage Source
+  % Models an ideal sinusoidal voltage generator.
+  
+  nodes
+    p = foundation.electrical.electrical; % +:top
+    n = foundation.electrical.electrical; % -:bottom
+  end
+  
+  parameters
+    V_amp = { 10, 'V' };  % Peak amplitude
+    freq  = { 60, 'Hz' }; % Frequency
+    phase = { 0, 'rad' }; % Phase shift
+  end
+  
+  variables
+    i = { 0, 'A' }; % Current
+    v = { 0, 'V' }; % Voltage
+  end
+  
+  branches
+    i : p.i -> n.i; % Current flows from node p to node n
+  end
+  
+  equations
+    % Define the voltage drop across the source
+    v == p.v - n.v;
+    
+    % Sinusoidal voltage generation using the global simulation time
+    v == V_amp * sin(2 * pi * freq * time + phase);
+  end
+end
